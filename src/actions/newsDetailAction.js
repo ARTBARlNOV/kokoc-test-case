@@ -1,56 +1,51 @@
-import { FETCH_COMMENTS_SUCCESS, FETCH_STORY_BEGIN, FETCH_STORY_FAILURE, FETCH_STORY_SUCCESS } from "../types/storyTypes";
+import {
+  FETCH_COMMENTS_SUCCESS, FETCH_STORY_BEGIN, FETCH_STORY_FAILURE, FETCH_STORY_SUCCESS,
+} from '../types/storyTypes';
 
 export const fetchStoryBegin = () => ({
   type: FETCH_STORY_BEGIN,
 });
 
-export const fetchStorySuccess = story => ({
+export const fetchStorySuccess = (story) => ({
   type: FETCH_STORY_SUCCESS,
-  payload: { story }
+  payload: { story },
 });
 
-export const fetchStoryFailure = error => ({
+export const fetchStoryFailure = (error) => ({
   type: FETCH_STORY_FAILURE,
-  payload: { error }
+  payload: { error },
 });
 
-export const fetchCommentsSuccess = comments => ({
+export const fetchCommentsSuccess = (comments) => ({
   type: FETCH_COMMENTS_SUCCESS,
-  payload: { comments }
+  payload: { comments },
 });
 
-export const fetchStoryDetail = storyId => {
-  return dispatch => {
-    dispatch(fetchStoryBegin());
-    fetch(`https://hacker-news.firebaseio.com/v0/item/${storyId}.json`)
-      .then(handleErrors)
-      .then(res => res.json())
-      .then(story => {
-        dispatch(fetchStorySuccess(story));
-        if (story?.kids && story?.kids.length > 0) {
-          fetchComments(story?.kids, dispatch);
-        }
-      })
-      .catch(error => dispatch(fetchStoryFailure(error)));
-  };
-};
-
-const fetchComments = (commentIds, dispatch) => {
-  const commentsPromises = commentIds.map(id =>
-    fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(handleErrors).then(res => res.json())
-  );
-  Promise.all(commentsPromises)
-    .then(comments => {
-      dispatch(fetchCommentsSuccess(comments));
-    });
-};
-
-
-
-const handleErrors = response => {
+const handleErrors = (response) => {
   if (!response.ok) {
     throw Error(response.statusText);
   }
   return response;
 };
 
+const fetchComments = (commentIds, dispatch) => {
+  const commentsPromises = commentIds.map((id) => fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(handleErrors).then((res) => res.json()));
+  Promise.all(commentsPromises)
+    .then((comments) => {
+      dispatch(fetchCommentsSuccess(comments));
+    });
+};
+
+export const fetchStoryDetail = (storyId) => (dispatch) => {
+  dispatch(fetchStoryBegin());
+  fetch(`https://hacker-news.firebaseio.com/v0/item/${storyId}.json`)
+    .then(handleErrors)
+    .then((res) => res.json())
+    .then((story) => {
+      dispatch(fetchStorySuccess(story));
+      if (story?.kids && story?.kids.length > 0) {
+        fetchComments(story?.kids, dispatch);
+      }
+    })
+    .catch((error) => dispatch(fetchStoryFailure(error)));
+};

@@ -1,4 +1,4 @@
-import { FETCH_COMMENT_BEGIN, FETCH_COMMENT_SUCCESS, FETCH_COMMENT_FAILURE } from "../types/commentTypes";
+import { FETCH_COMMENT_BEGIN, FETCH_COMMENT_SUCCESS, FETCH_COMMENT_FAILURE } from '../types/commentTypes';
 
 const initialState = {
   commentsById: {},
@@ -12,7 +12,7 @@ export default function commentReducer(state = initialState, action) {
       return {
         ...state,
         loading: true,
-        error: null
+        error: null,
       };
 
     case FETCH_COMMENT_SUCCESS:
@@ -20,12 +20,11 @@ export default function commentReducer(state = initialState, action) {
         ...state,
         commentsById: {
           ...state.commentsById,
-          [action.payload.commentId]: action.payload.comment
+          [action.payload.commentId]: action.payload.comment,
         },
         loading: false,
-        error: null
+        error: null,
       };
-
 
     case FETCH_COMMENT_FAILURE:
       return {
@@ -34,8 +33,8 @@ export default function commentReducer(state = initialState, action) {
         error: action.payload.error,
         comments: {
           ...state.commentsById,
-          [action.payload.commentId]: { error: action.payload.error }
-        }
+          [action.payload.commentId]: { error: action.payload.error },
+        },
       };
 
     default:

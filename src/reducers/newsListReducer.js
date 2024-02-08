@@ -1,4 +1,4 @@
-import { FETCH_NEWS_LIST_BEGIN, FETCH_NEWS_LIST_FAILURE, FETCH_NEWS_LIST_SUCCESS } from "../types/newsListTypes";
+import { FETCH_NEWS_LIST_BEGIN, FETCH_NEWS_LIST_FAILURE, FETCH_NEWS_LIST_SUCCESS } from '../types/newsListTypes';
 
 const initialState = {
   newsList: [],

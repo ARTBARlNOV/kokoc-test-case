@@ -1,4 +1,4 @@
-import { FETCH_COMMENT_BEGIN, FETCH_COMMENT_SUCCESS, FETCH_COMMENT_FAILURE } from "../types/commentTypes";
+import { FETCH_COMMENT_BEGIN, FETCH_COMMENT_SUCCESS, FETCH_COMMENT_FAILURE } from '../types/commentTypes';
 
 export const fetchCommentBegin = () => ({
   type: FETCH_COMMENT_BEGIN,
@@ -14,16 +14,14 @@ export const fetchCommentFailure = (commentId, error) => ({
   payload: { commentId, error },
 });
 
-export const loadCommentDetails = (commentId) => {
-  return dispatch => {
-    dispatch(fetchCommentBegin());
-    fetch(`https://hacker-news.firebaseio.com/v0/item/${commentId}.json`)
-      .then(response => response.json())
-      .then(data => {
-        dispatch(fetchCommentSuccess(commentId, data));
-      })
-      .catch(error => {
-        dispatch(fetchCommentFailure(commentId, error.toString()));
-      });
-  };
+export const loadCommentDetails = (commentId) => (dispatch) => {
+  dispatch(fetchCommentBegin());
+  fetch(`https://hacker-news.firebaseio.com/v0/item/${commentId}.json`)
+    .then((response) => response.json())
+    .then((data) => {
+      dispatch(fetchCommentSuccess(commentId, data));
+    })
+    .catch((error) => {
+      dispatch(fetchCommentFailure(commentId, error.toString()));
+    });
 };

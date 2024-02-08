@@ -1,27 +1,28 @@
-import { FETCH_COMMENTS_SUCCESS, FETCH_STORY_BEGIN, FETCH_STORY_FAILURE, FETCH_STORY_SUCCESS } from "../types/storyTypes";
-
+import {
+  FETCH_COMMENTS_SUCCESS, FETCH_STORY_BEGIN, FETCH_STORY_FAILURE, FETCH_STORY_SUCCESS,
+} from '../types/storyTypes';
 
 const initialState = {
   story: null,
   comments: [],
   loading: false,
-  error: null
+  error: null,
 };
 
 export default function newsReducer(state = initialState, action) {
-  switch(action.type) {
+  switch (action.type) {
     case FETCH_STORY_BEGIN:
       return {
         ...state,
         loading: true,
-        error: null
+        error: null,
       };
 
     case FETCH_STORY_SUCCESS:
       return {
         ...state,
         loading: false,
-        story: action.payload.story
+        story: action.payload.story,
       };
 
     case FETCH_STORY_FAILURE:
@@ -29,13 +30,13 @@ export default function newsReducer(state = initialState, action) {
         ...state,
         loading: false,
         error: action.payload.error,
-        story: null
+        story: null,
       };
 
     case FETCH_COMMENTS_SUCCESS:
       return {
         ...state,
-        comments: action.payload.comments
+        comments: action.payload.comments,
       };
 
     default:
