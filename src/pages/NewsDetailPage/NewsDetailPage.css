@@ -1,0 +1,36 @@
+.news-detail-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.news-detail-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.news-detail-meta {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.news-detail-link {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.comment-list {
+  list-style: none;
+  padding: 0;
+}
+
+.comment-item {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.comment-author {
+  font-weight: bold;
+}
